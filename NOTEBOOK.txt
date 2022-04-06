@@ -1,0 +1,276 @@
+>>>>>>Iniciando curso de Laravel do Mattheus Battisti
+
+    >>>>>>ARRUMAR AS TEMPLATES
+    >>>>>>SOBRE AS IMAGENS SALVAS: COMO FUNCIONA O SALVAMENTO DELAS NO AMBIENTE DE PRODUÇÃO
+    >>>>>>ARRUMAR LOGOUT DA HOME
+    >>>>>>ARRUMAR PARA MOSTRAR OS ITENS NA EDIÇÃO
+
+    -Framework construido em PHP
+    -utiliza arquitetura MVC
+    -Possui o Artisan como um terminal próprio, migrations para melhorar o controle de tabelas do DB e
+    possui o Blade como template engine própria
+    -Boa estruturação de pastas
+
+    Prático e rápido de usar, necessitando pouca configuração
+
+>>>>>>>>Aula 3 Rotas e views
+    Através delas acessamos nossas views e controllers, controlando o fluxo da aplicação
+    views são nossas representações gráficas montadas através dos templates por meio do HTML
+    Os templates utilizam dados dinâmicos através do php
+    {{$nome}}
+
+
+(APLICAÇÃO WEB - QUE POSSUI INTERFACE PARA USUÁRIO - USARÁ ROTAS WEB QUE TRARÃO ALGUMA INTERFACE GRÁFICA)
+
+
+>>>>>>>>Aula 4 Conhecendo o Blade
+    Template engine do Laravel deixando views dinâmicas com também informações do DB - são responsabilidade do Blade
+        É o blade quem vai fornecer estrutas (diretivas) de manipulação de código no html, ao invés de usarmos php puro
+        Alguns exemplos do uso do blade e envio de parâmetros para a view
+
+>>>>>>>>Aula 5 Explorando mais o blade
+    -possibilita loops
+    -possibilita uso de PHP puro
+    -possibilita escrever comentários nas views, pois não serão interpretados / {{-- --}}
+
+    @foreach ($arr as $array )
+    <p> {{$loop->index}} </p>
+    @endforeach
+
+    Váriavel $loop inserida a partir do próprio Blade para ser usada com FOREACH - carrega algumas propriedades sobre o loop
+
+>>>>>>>>Aula 6 Adicionando arquivos estáticos (css,js, imagens)
+    -Pasta Public
+
+>>>>>>>>Aula 7 Layouts com Blade
+    Permiti o reaproveitamento de código, por ex utilizando o mesmo header e o mesmo footer para todos as páginas sem repetir o código
+    esse recurso permiti seções dinâmicas (conteúdo) também como a troca dinâmica do titulo da pagina
+
+    pasta de layouts criada e manipulação do arquivo main.blade
+    a entrada do conteúdo dinâmico na página de layout principal se dará pela tag:
+        @yield("content")
+        @yield("title") -> para o titulo da pag
+        @extends("") -> para ser usado dentro das views para puxar o layout principal. Como extends de classe
+        @section("") -> dentro das paginas, usado para linkar as partes da view que serão enviadas dinâmicamente
+
+    Configuração de fontes e BootStrap
+        Obtido todas as fontes da roboto sem precisar copiar todos os tipos
+
+>>>>>>>>Aula 8 Resgatando parâmetros de url
+    -Possível mudar a resposta da view através do parâmetro
+    -na rota o parâmetro é inserido através: {$parâmetro} - obrigatório
+    -parâmetros opcionais através do: ? -> opcional
+    O laravel aeita query parâmeters: ?nome=Gilberto&idade=24 -> query parâmeters
+
+    Passado o parâmetro de id através da url e enviando dinamicamente para a view
+
+>>>>>>>>Aula 9 controllers
+    -Parte fundamental
+    -Condensam a maior parte da lógica da aplicação
+    -Envia e espera pedidos e respostas do DB e das views
+    -Podem ser usados via Artisan
+    -é normal através do controller, retornar um view ou redirecionar para uma url
+    -conhecidos com actions
+
+    Criado o controller EventController = php artisan make:controller EventController
+        Route::get('/', [EventController::class, "index"] ); ROTA USANDO O CONTROLLER
+
+
+>>>>>>>>Aula 10 CONEXÃO COM BANCO DE DADOS
+    - A conexão é configurada pelo arquivo .env
+    - Maior liberdade e segurança
+    -O laravel utiliza o ORM(Object-Relational Mapping) Eloquent
+    -Utiliza as migrations para criação de tabelas - AJUDA COM VERSIONAMENTO
+
+    O .env é para que ele não junto ao clonar!!! Ao upar ao servidor ou github ele vai - supostamente -
+
+    Criação do banco de dados do projeo hdceventscurso e envio das migrates para la - php artisan migrate - envia todas
+
+>>>>>>>>Aula 11 Migrations
+    -Funcionam como versonamento do DB
+    -Podemos avançar e retroceder a qualquer momento
+    -Adicionar e remover colunas
+    -Fazer o setup do DB com poucos comandos
+    -É possível verificar as migrations com migrate:status
+
+    php artisan make:migrate nomeTabela
+        Cria a tabela
+
+    Ao criar a tabela, quando for configurar as colunas, cada coluna terá um tipo para aplicar os dados
+        $table->string("name", 100); // especificação de nº de caracteres
+
+
+    php artisan migrate:fresh
+        Vai dropar geral e levantar de volta (APAGA TUDO)
+
+>>>>>>>>Aula 12 Avançando nas migrations
+    migrate:rollback -> retorna uma migration
+    migrate:reset -> volta todas as migrations
+    migrate:refresh -> volta as migrations e roda o migrate (NÃO APAGA OS DADOS COMO O FRESH)
+
+    Nas migrations de create o método down ja vem pré configurado
+    nas de add, devemos configurar
+    de acordo com o comando de criação de migration, o método da Schema:: vai mudar
+
+    O create vai criar a tabela e o add vai servir para atualizar a tabela
+        php artisan make:migration add_category_to_products_table
+
+>>>>>>>>Aula 13 Eloquent
+    -ORM do Laravel
+    -Cada tabela possui seu model responsável pela interação de requisições com o DB
+    -A convenção do nome do Model é o nome da entidade no singular enquanto as tabelas é a entidade no plural
+    -O model se encarrega por configurações específicas
+
+    Criação da migration de events e exclusão das demais de teste
+    Criação do model de event
+    Mostrado o método all() que trará um select *
+    Ao que parece a responsabiidade de interação será toda do model, onde o controller irá apenas tratar o pedido e resposta dele
+
+>>>>>>>>Aula 14 Finalizando a home
+
+>>>>>>>>Aula 15 Adicionando registro ao DB
+    -No laravel é comum termos uma action para o POST  chamada de store()
+    onde iremos compor o objeto e enviar com com base nos dados do enviados pelo POST
+    -Com o obj formado usamos a action save() para persistência dos dados
+
+    Arrumada a template de create e criação do método store() recebendo o request passado pelo form
+        Criado o objeto através do request e salvado, tudo através do instaciamento da Model
+
+    O Model terá seus métodos de interação do DB através da classe pai
+
+    NÃO ESQUECER DO @CSRF PARA ENVIO DOS FORM
+
+
+>>>>>>>>Aula 16 Flash Messages
+    -Podemos adicionar mensagens ao usuário através de session, conhecidas como flash Messages
+    -Adicionada através do método with nos controllers, actions
+    -usadas para dar algum feedback ao user
+    -no blade, a presença da mensagem se da através da diretiva @session
+    aplicado a session na action store e usada a diretiva do layout main
+
+>>>>>>>>Aula 17 Salvando imagem no Laravel
+    -Necessário mudar o enctype do form e criar o input de img
+    -No controller fazer uma verificação da imagem
+    -Salvar em uma PASTA, com nome único
+    -No banco salvamos APENAS o path da imagem
+    enctype="multipart/form-data" - ENVIAR ARQUIVOS PELO FORM HTML
+
+    Configurado a lógica na action store()
+
+    Verificou a imagem, tratou, mandou para a pasta correta e salvou apenas o path no DB
+
+    criação da migration de imagem
+    arrumado a view do welcome para receber as imagens dos eventos
+
+>>>>>>>>Aula 18 REsgatando um registro
+    -Criação da view do eventos
+    -aprender a resgatar apenas um evento através do Eloquent
+    -Através do método findOrFail() - irá buscar um registro especifico que retornara ele ou fail
+    -Criar uma nova view e rota para a função
+    -Nesta view teremos as informações do evento e botao para participar dele
+
+    Pela view entraremos na rota, que enviará o id do evento em questão, e através disso iremos acessa-lo
+    O id é enviado através da rota diretamente para a action que receberá como parâmetro
+
+    Criação da view show
+
+>>>>>>>>Aula 19 Salvando JSON no DB
+    -Podemos salvar um conjunto de dados no DB para itens de multipla escolha
+    -criação de um campo determinado de JSON via migration - a migration irá salvar no db como LONGTEXT
+    -No front podemos utilizar inputs com check-box - FOI NECESSÁRIO USAR NAME="items[]" PARA SALVAR TODOS CORRETAMENTE
+    -após envio para o controller, recebemos do request os itens e o resto do processo é igual aos outros dados do model
+        Será necessário configurar para que o laravel salve os itens como array e pra isso iremos também mexer no Model
+        com protected $cast[]
+
+>>>>>>>>Aula 20 Salvando Datas
+    -Usar um input do tipo Date na view
+    -Criar um campo DateTime nvia migration
+    -Processar o envio na action via POST
+
+    Necessário criar na model uma especificação de nova data
+    Conversão da data para formato PT-BR usando a função date()
+        {{date("d/m/y", strtotime($event->date))}}
+
+CASO NÃO HAJA EVENTOS SERÁ CRIADA UMA MENSAGEM PARA ISSO NA WELCOME
+
+>>>>>>>>Aula 21 Busca no Laravel
+    -Utilizar o Eloquent para as buscas
+    -Usando o método where como filtro e enviando para a view pela mesma action index() da rota /
+    -possível fazer a busca na própria home, alterando o layout via blade
+        Usando diretiva if na variavel $search
+        POSSIVEL PASSAR O PARÃMETRO NAME VIA QUERY PARÂMETER
+
+>>>>>>>>Aula 22 Autenticação no Laravel
+    -Possível fazer com jetstream de maneira rápida
+    -Instalar via Composer
+    -Instalar liveWare que são componenetes de autenticação para o blade / funciona via sessionn
+    -e rodar migrations do livewire
+
+    usada diretiva:
+    @guest - @endguest: identifica se não está autenticado e mostra os elementos dentro desta diretiva
+    @auth - @endauth - diretiva que mostra elementos, quando estiver autenticado
+
+    Condigurado também o botao de logout na main layout
+
+>>>>>>>Relação One to Many - #23
+    -relações são essênciais para DBs relacionais
+    -criação de relação de um para muitos entre usuário e eventos, o user pode ter um evento ou vários
+    -alteração na migration botando a coluna user_id de chave estrangeira criando método no Model de Event
+    -criação de método no Model de User
+
+    Com a criação do user_id na tabela events, teremos que inserir o id do user no evento criado através do controller
+
+    configuração de rota de criar evento para apenas quando logado através de um middleware, que fará algo entre a action e a view
+
+Curso Laravel - Exibindo dados do usuário na view - #24
+
+    Refatoração da action show() e da view show
+
+Curso Laravel - Criando uma dashboard - #25
+    -Criação da rota e da e Controller dashboard para mostrar os eventos do mesmo
+    -futuramente faremos evento de edição e exclusão de evento
+
+    Refatoração da view dashboard
+
+Curso Laravel - Deletando dados (CRUD: Delete) - #26
+    -Rota nova usando o método delete
+    -outro verbo http: DELETE na view
+    -Lógica no controller para persistência
+
+Curso Laravel - Atualização de dados (CRUD: Update) - #27
+    -Criar a rota e também a view que mostrará os dados a serem editados
+    criação da rota get para pegar os dados e criação de rota PUT para atualizar os dados
+        Reutilizar a view de create
+        uso da diretiva de put na view
+        troca do valor dos inputs pelos ja existentes no DB
+        Forma especial para mostrar a data ja existente e o select
+        Os itens não serão preenchidos
+
+    -Usar o verbo HTTP: PUT
+
+    -Persistir a action no controller
+        action update
+        ->>>>>>>>>>por causa do método $request->all(),
+        é necessário na model especificar a possibilidade de pode atualizar dados enviados pelo POST
+            Não esquecer do REDIRECT
+        >>>NECESSÁRIO refatoração na action de update para salvar a nova imagem
+
+Curso Laravel - Relação many to many - #28
+    -Um usário pode ter vários eventos e um evento, vários participantes
+    -necessária nova tabela que cuida dessa relação - event_user - contendo id do user e id do evento
+        config do model de user e event também, que cuidara dessas interações
+        o nome será em ordem alfabética, ja q tera o nome das 2 tabelas
+    essa interação será pela action
+
+    Uso da view de show junto de js
+    as funções com interações podem apresentar erros de não encontrar elas no controller
+    Usado o count junto do método users() da model Events para contar o n° de participantes
+
+Curso Laravel - Exibindo eventos que o usuário participa - #29
+    refatoração do método dashboard e da view
+    refatoração na action de edit, para impedir que só o dono do evento possa edita-lo
+
+Curso Laravel - Removendo presença do evento - #30
+    -rota com delete
+    -criação da action
+    -refatoração do show, para não participar do evento mais de uma vez
