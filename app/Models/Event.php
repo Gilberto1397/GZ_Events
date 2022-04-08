@@ -24,6 +24,6 @@ class Event extends Model
 
     public function users() // Evento possui muitos u
     {
-        return $this->belongsToMany("App/Models/user");
+        return $this->belongsToMany("App\Models\user");
     }
 }
