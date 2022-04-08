@@ -22,8 +22,11 @@
 
     <header>
         <nav class="navbar  navbar-dark bg-dark">
-            <img src="/img/gestão-de-promoters-1-8-1.png" class="imagem" alt="" srcset="">
+            <a href="/"><img src="/img/gestão-de-promoters-1-8-1.png" class="imagem" alt="LOGO" srcset=""></a>
             <ul class="nav justify-content-end">
+                <li class="nav-item active">
+                    <a class="nav-link text-white" href="/">Home</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link text-white" href="/events/create">Criar Evento</a>
                 </li>
@@ -72,7 +75,7 @@
     </main>
 
     <footer class="text-center">
-        <p>HDC Events &copy; 2022</p>
+        <p>GZ Events &copy; 2022</p>
     </footer>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

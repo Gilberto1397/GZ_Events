@@ -10,7 +10,15 @@
     border-radius: 15px;
 }
 
+#welcome-section
+{
+    background-image: url("/img/event1.jpeg");
+    height: 500px;
+    color: rgb(151, 245, 11);
+}
+
 #welcome-image
 {
-    width: 300px;
+    width: 287px;
+    height: 320px;
 }
