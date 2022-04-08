@@ -1,52 +1,41 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('layouts.main')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield("title")</title>
+LAYOUT WELCOME
 
-    {{-- BOOTSTRAP --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+@section('title', 'HDC Events')
 
-    {{-- CSS DO APP --}}
-    <link rel="stylesheet" href="/css/styles.css">
+@section('content')
 
-    {{-- FONTES GOOGLE --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto
+    <div id="search-container" class="col-md-12">
+        <h1>Busque um evento</h1>
+        <form action="/" method="GET">
+            <input class="form-control" type="text" name="search" id="search" placeholder="Procurando...">
+        </form>
+    </div>
+    @if ($search)
+        <h2>Buscando por: {{ $search }}</h2>
+    @else
+        <h2>Próximos eventos</h2>
+        <p>Veja os eventos dos próximos dias</p>
+    @endif
+    <div id="cards-container" class="row">
+            @foreach ($events as $event)
+            <div class="card col-md-3">
+                <img src="/img/events/{{ $event->image }}" class="w-25%" alt="{{ $event->title }}">
+                <div class="card-body">
+                    <p class="card-date">{{ date('d/m/Y', strtotime($event->date)) }}</p>
+                    <h5 class="card-title">{{ $event->title }}</h5>
+                    <p class="card-participants">{{ count($event->users) }}</p>
+                    <a href="/events/{{ $event->id }}" class="btn btn-primary">Saber mais</a>
+                </div>
+            </div>
+    @endforeach
+    @if (count($events) == 0 && $search)
+        <p>Não foi possível encontrar nenhum evento com {{ $search }}! </p> <a href="/">Ver todos!</a>
+    @elseif (count($events) == 0)
+        não há eventos disponíveis
+    @endif
+    </div>
+    </div>
 
-    <script src="/js/script.js"></script>
-</head>
-<header>
-
-    <nav class="navbar  navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <ul class="nav justify-content-end">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-          </ul>
-      </nav>
-
-</header>
-
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-</body>
-
-</html>
+@endsection

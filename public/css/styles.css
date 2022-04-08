@@ -1,0 +1,16 @@
+*
+{
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.imagem
+{
+    width: 150px;
+    border-radius: 15px;
+}
+
+#welcome-image
+{
+    width: 300px;
+}
