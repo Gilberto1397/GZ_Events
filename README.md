@@ -1,6 +1,6 @@
 # GZ_Events
  
-Aplicação desenvolvida para divulgação de eventos.
+Aplicação desenvolvida como estudo de caso em LARAVEL 8x para divulgação de eventos.
    Possuindo funcionalidades de autenticação de usuário, além do CRUD para manipulação dos eventos e dashboard para o dono do evento divulgado.
 ![image](https://user-images.githubusercontent.com/81825952/162549567-683c1409-0e2e-47c4-bac5-5c6f45c2e58e.png)
 ![image](https://user-images.githubusercontent.com/81825952/162549578-467b286d-ff0f-40c3-8643-133979a421fe.png)
