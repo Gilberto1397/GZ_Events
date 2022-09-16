@@ -28,37 +28,3 @@ Route::post('/events', [EventController::class, "store"] ); // insere eventos ao
 Route::delete('/events/{id}', [EventController::class, "destroy"])->middleware("auth"); // insere eventos ao DB
 Route::delete('/events/leave/{id}', [EventController::class, "leaveEvent"])->middleware("auth"); // insere eventos ao DB
 Route::post('/events/join/{id}', [EventController::class, "joinEvent"])->middleware("auth"); // insere eventos ao DB
-
-/* Route::get('/teste', function () {
-
-    $nome = "Gilberto";
-    $arr = [10,20,30];
-
-    return view('teste', ["nome" => $nome, "arr" => $arr]);
-}); */
-
-/* Route::get('/produtos/{id}', function ($id) { PASSANDO PARÂMETRO NA URL
-
-    return view('product', ["id" => $id]);
-}); */
-
-/* Route::get('/produtos', function () {
-
-    $busca = request("search");
-    return view('product', ["search" => $busca]); // QUERYPARÃMETER
-});
-
-Route::get('/produtos_teste/{id?}', function ($id = null) { // PARÃMETRO OPCIONAL
-
-    return view('product', ["id" => $id]);
-}); */
-
-/* Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-}); */

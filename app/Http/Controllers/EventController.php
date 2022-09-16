@@ -14,7 +14,7 @@ class EventController extends Controller
 
         if ($search) {
             $events = Event::where([
-                ["title", "like", "%" . $search . "%"] // Coluna pesquisada - tipos de pesquisa - query
+                ["title", "like", "%" . $search . "%"] // Coluna pesquisada - tipo de pesquisa
             ])->get(); // obtém os resultados
         } else {
             $events = Event::all();

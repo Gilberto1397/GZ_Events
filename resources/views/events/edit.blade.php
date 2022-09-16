@@ -22,6 +22,7 @@
                 <label for="date">Data do Evento:</label>
                 <input type="date" class="form-control" name="date" id="date" value="{{$event->date->format("Y-m-d")}}" aria-describedby="emailHelp">
             </div>
+            <img src="" alt="">
             <div class="form-group">
                 <label for="city">Cidade:</label>
                 <input type="text" class="form-control" name="city" id="city" value="{{$event->city}}" aria-describedby="emailHelp">

@@ -68,6 +68,7 @@
             @method("DELETE")
             <button type="submit" class="btn btn-danger delete-btn"><ion-icon name="trash-outline"></ion-icon>
             Sair do Evento</button>
+               </form>
             </td>
           </tr>
           @endforeach
